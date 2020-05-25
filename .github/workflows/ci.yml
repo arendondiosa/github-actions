@@ -1,7 +1,6 @@
 name: Tests Staging
 
 on:
-  # This avoids having duplicate builds for a pull request
   push:
     branches:
     - staging
@@ -41,6 +40,34 @@ jobs:
           python -m pip list
       - name: Run python lint
         run: pylint src
+  # lint-js:
+  #   name: Lint JS
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v2
+  #     - name: Cache node
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-13-${{ hashFiles('**/lektor/admin/package-lock.json') }}
+  #     - name: Setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '13'
+  #     - name: Install node dependencies
+  #       run: |
+  #         cd lektor/admin/
+  #         npm install .
+  #         npm run webpack
+  #     - name: Show node environment
+  #       run: |
+  #         node --version
+  #         npm --version
+  #     - name: Run JS lint
+  #       run: |
+  #         cd lektor/admin/
+  #         npm run lint
   lint-yaml:
     name: Lint YAML
     runs-on: ubuntu-latest
