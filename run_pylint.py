@@ -32,7 +32,7 @@ args, remaining_args = parser.parse_known_args()
 threshold = args.threshold
 path = args.path
 
-run = lint.Run(['--py3k', path], exit=False)
+run = lint.Run([path], exit=False)
 score = run.linter.stats['global_note']
 
 print("score {}".format(score))
