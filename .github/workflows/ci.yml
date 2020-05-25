@@ -68,5 +68,5 @@ jobs:
           python --version
           python -m pip list
       - name: Run YAML lint
-        run: pylint django
+        run: yamllint yaml
     
