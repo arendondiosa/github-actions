@@ -55,8 +55,8 @@ responses:
           example: 10
     example: {
       applications: [],
-        total_applications: 10,
-      }
+      total_applications: 10,
+    }
   400:
     description: Invalid parameters
     content: {}
