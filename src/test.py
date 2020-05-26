@@ -335,3 +335,9 @@ def docstring_to_yaml(docstring_dict, tab_size=1):
     yaml += '\n'
 
     return add_tabs_to_yaml(yaml, tab_size)
+
+def new_function():
+    """
+    This is a new function
+    """
+    pass
