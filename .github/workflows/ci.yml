@@ -18,15 +18,15 @@ jobs:
     steps:
       - name: Install OS dependencies
         run: sudo apt-get install libxml2-dev libxslt-dev
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Check Repository
+        run: ls
       - name: Clone Public Repository
         uses: actions/checkout@v2
         with:
           repository: arendondiosa/apidocs
       - name: Check Public Repository
-        run: ls
-      - name: Checkout branch
-        uses: actions/checkout@v2
-      - name: Check Repository
         run: ls
       - name: Check All Repositories
         run: ls ..
