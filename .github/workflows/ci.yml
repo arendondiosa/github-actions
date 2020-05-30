@@ -18,12 +18,14 @@ jobs:
     steps:
       - name: Install OS dependencies
         run: sudo apt-get install libxml2-dev libxslt-dev
-      - name: Checkout branch
-        uses: actions/checkout@v2
       - name: Clone Repository
         uses: actions/checkout@v2
         with:
           repository: arendondiosa/apidocs
+      - name: Check Repository
+        run: ls
+      - name: Checkout branch
+        uses: actions/checkout@v2
       - name: Check Repository
         run: ls
       - name: Setup Python
