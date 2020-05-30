@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: arendondiosa/apidocs
-          token: ${{ secrets.a05d944ef5ec030bcea024443d1b56fdab565f18 }}
+          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Check Public Repository
         run: ls
       - name: Check All Repositories
