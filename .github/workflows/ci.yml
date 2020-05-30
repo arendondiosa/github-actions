@@ -16,6 +16,8 @@ jobs:
     name: Lint Python
     runs-on: ubuntu-latest
     steps:
+      - name: Install OS dependencies
+        run: apt-get install libxml2-dev libxslt-dev
       - name: Checkout branch
         uses: actions/checkout@v2
       - name: Cache pip
