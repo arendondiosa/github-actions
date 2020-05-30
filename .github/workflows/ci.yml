@@ -38,7 +38,6 @@ jobs:
         run: |
           pip install -U pip wheel
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pylint==1.9.5
       - name: Show python environment
         run: |
           python --version
