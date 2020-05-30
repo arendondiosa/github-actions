@@ -25,7 +25,8 @@ jobs:
         with:
           python-version: '2.7'
           architecture: 'x64'
-      - uses: actions/cache@v1
+      - name: Python Cache
+        uses: actions/cache@v1
         id: cache
         with:
           path: ~/.cache/pip
