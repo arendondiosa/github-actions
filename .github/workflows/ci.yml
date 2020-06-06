@@ -42,13 +42,14 @@ jobs:
         id: cache
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-hola2
+          key: ${{ runner.os }}-pip-hola3
           restore-keys: |
-            ${{ runner.os }}-pip-hola2
+            ${{ runner.os }}-pip-hola3
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          if [ -f principal/requirements.txt ]; then pip install -r principal/requirements.txt; fi
+          cd principal
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Show python environment
         run: |
           python --version
