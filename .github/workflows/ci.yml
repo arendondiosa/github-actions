@@ -33,14 +33,18 @@ jobs:
         with:
           python-version: '2.7'
           architecture: 'x64'
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
       - name: Python Cache
         uses: actions/cache@v1
         id: cache
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-hola1
+          key: ${{ runner.os }}-pip-hola2
           restore-keys: |
-            ${{ runner.os }}-pip-hola1
+            ${{ runner.os }}-pip-hola2
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
