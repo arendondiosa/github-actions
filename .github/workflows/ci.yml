@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
     - staging
-    
+
 jobs:
   lint-py:
     name: Lint Python
@@ -53,29 +53,31 @@ jobs:
       # - name: Run python lint
       #   run: |
       #     python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
-  # lint-js:
-  #   name: Lint JS
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v2
-  #     - name: Cache node
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.os }}-node-13-${{ hashFiles('**/src/js/package-lock.json') }}
-  #     - name: Setup node
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '13'
-  #     - name: Install node dependencies
-  #       run: |
-  #         cd src/js/
-  #         npm install .
-  #     - name: Show node environment
-  #       run: |
-  #         node --version
-  #         npm --version
+  lint-js:
+    name: Lint JS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      # - name: Cache node
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-13-1
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-13-1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '13'
+      - name: Install node dependencies
+        run: |
+          cd src/js/
+          npm install .
+      - name: Show node environment
+        run: |
+          node --version
+          npm --version
   #     - name: Run JS lint
   #       run: |
   #         cd src/js/
