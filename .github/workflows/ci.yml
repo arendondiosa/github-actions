@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: '2.7'
+          python-version: '3.6'
           architecture: 'x64'
       - name: Get pip cache path
         id: pip-cache
@@ -37,9 +37,9 @@ jobs:
         id: cache
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-hola5
+          key: ${{ runner.os }}-pip-hola6
           restore-keys: |
-            ${{ runner.os }}-pip-hola5
+            ${{ runner.os }}-pip-hola6
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
