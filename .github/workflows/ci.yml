@@ -40,7 +40,7 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-hola
           restore-keys: |
-            ${{ runner.os }}-pip-
+            ${{ runner.os }}-pip-hola
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
