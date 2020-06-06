@@ -40,7 +40,7 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-1
           restore-keys: |
-            ${{ runner.os }}-pip-1
+            ${{ runner.os }}-pip-
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -52,7 +52,7 @@ jobs:
           python -m pip list
       - name: Run python lint
         run: |
-          python run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
+          python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
   # lint-js:
   #   name: Lint JS
   #   runs-on: ubuntu-latest
