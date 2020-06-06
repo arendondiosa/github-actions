@@ -39,11 +39,11 @@ jobs:
         id: cache
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-hola3
+          key: ${{ runner.os }}-pip-hola34
           restore-keys: |
-            ${{ runner.os }}-pip-hola3
+            ${{ runner.os }}-pip-hola4
       - name: Install python dependencies
-        # if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           cd principal
           ls
