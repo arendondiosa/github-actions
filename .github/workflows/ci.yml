@@ -17,14 +17,14 @@ jobs:
         run: sudo apt-get install libxml2-dev libxslt-dev
       - name: Checkout branch
         uses: actions/checkout@v2
-        with:
-          path: principal
-      - name: Clone Private Repository
-        uses: actions/checkout@v2
-        with:
-          repository: arendondiosa/apidocs
-          path: private
-          token: ${{ secrets.ACCESS_TOKEN }}
+        # with:
+        #   path: principal
+      # - name: Clone Private Repository
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: arendondiosa/apidocs
+      #     path: private
+      #     token: ${{ secrets.ACCESS_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
@@ -54,9 +54,9 @@ jobs:
         run: |
           python --version
           python -m pip list
-      - name: Run python lint
-        run: |
-          python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
+      # - name: Run python lint
+      #   run: |
+      #     python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
   # lint-js:
   #   name: Lint JS
   #   runs-on: ubuntu-latest
