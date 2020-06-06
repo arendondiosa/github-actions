@@ -18,22 +18,38 @@ import sys
 from pylint import lint
 
 
-desc = "PyLint wrapper that add the --fail-under option."\
-       " All other arguments are passed to pylint."
+DESC = (
+    "PyLint wrapper that add the --fail-under option."
+    " All other arguments are passed to pylint."
+)
 
-parser = argparse.ArgumentParser(description=desc)
-parser.add_argument('--path', dest='path', type=str, help='path where the pylint validation are going to run')
-parser.add_argument('--fail-under', dest='threshold', type=float, default=8,
-                    help='If the final score is more than THRESHOLD, exit with'
-                    ' exitcode 0, and pylint\'s exitcode otherwise.')
+parser = argparse.ArgumentParser(description=DESC)
+parser.add_argument(
+    "--path",
+    dest="path",
+    type=str,
+    help="path where the pylint validation are going to run",
+)
+parser.add_argument(
+    "--rcfile", dest="rcfile", type=str, help="path for pylint configuration"
+)
+parser.add_argument(
+    "--fail-under",
+    dest="threshold",
+    type=float,
+    default=8,
+    help="If the final score is more than THRESHOLD, exit with"
+    " exitcode 0, and pylint's exitcode otherwise.",
+)
 
 args, remaining_args = parser.parse_known_args()
 
 threshold = args.threshold
 path = args.path
+rcfile = args.rcfile
 
-run = lint.Run([path], exit=False)
-score = run.linter.stats['global_note']
+run = lint.Run(["--rcfile=%s" % rcfile, path], exit=False)
+score = run.linter.stats["global_note"]
 
 print("score {}".format(score))
 print("threshold {}".format(threshold))

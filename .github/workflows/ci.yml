@@ -20,18 +20,13 @@ jobs:
         run: sudo apt-get install libxml2-dev libxslt-dev
       - name: Checkout branch
         uses: actions/checkout@v2
-      - name: Check Repository
-        run: ls
-      # - name: Clone Public Repository
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: arendondiosa/apidocs
-      # - name: Check Public Repository
-      #   run: ls
+        with:
+          path: principal
       - name: Clone Private Repository
         uses: actions/checkout@v2
         with:
           repository: arendondiosa/apidocs
+          path: private
           token: ${{ secrets.ACCESS_TOKEN }}
       - name: Check Public Repository
         run: ls
@@ -42,14 +37,14 @@ jobs:
         with:
           python-version: '2.7'
           architecture: 'x64'
-      - name: Python Cache
-        uses: actions/cache@v1
-        id: cache
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+      # - name: Python Cache
+      #   uses: actions/cache@v1
+      #   id: cache
+      #   with:
+      #     path: ~/.cache/pip
+      #     key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pip-
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -60,58 +55,32 @@ jobs:
           python --version
           python -m pip list
       - name: Run python lint
-        run: python run_pylint.py --fail-under=6.49 --path='src'
-  lint-js:
-    name: Lint JS
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v2
-      - name: Cache node
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-13-${{ hashFiles('**/src/js/package-lock.json') }}
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '13'
-      - name: Install node dependencies
-        run: |
-          cd src/js/
-          npm install .
-      - name: Show node environment
-        run: |
-          node --version
-          npm --version
-      - name: Run JS lint
-        run: |
-          cd src/js/
-          npm run lint
-  lint-yaml:
-    name: Lint YAML
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v2
-      - name: Cache pip
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-py-3.8-pip-${{ hashFiles('**/setup.py') }}
-      - name: Setup Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.8'
-          architecture: 'x64'
-      - name: Install python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install yamllint
-      - name: Show python environment
-        run: |
-          python --version
-          python -m pip list
-      - name: Run YAML lint
-        run: yamllint yaml
+        run: python run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
+  # lint-js:
+  #   name: Lint JS
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v2
+  #     - name: Cache node
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-13-${{ hashFiles('**/src/js/package-lock.json') }}
+  #     - name: Setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '13'
+  #     - name: Install node dependencies
+  #       run: |
+  #         cd src/js/
+  #         npm install .
+  #     - name: Show node environment
+  #       run: |
+  #         node --version
+  #         npm --version
+  #     - name: Run JS lint
+  #       run: |
+  #         cd src/js/
+  #         npm run lint
     

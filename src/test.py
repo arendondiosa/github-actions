@@ -43,6 +43,7 @@ def trim(docstring):
     # Return a single string:
     return "\n".join(trimmed)
 
+
 def reindent(string):
     """
     Add the same tab size for each line in a block of lines
