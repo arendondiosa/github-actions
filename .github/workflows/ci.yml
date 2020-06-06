@@ -47,6 +47,7 @@ jobs:
         run: |
           cd principal
           ls
+          pip install -U pip wheel
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip cache dir
       - name: Show python environment
