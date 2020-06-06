@@ -41,6 +41,8 @@ jobs:
           key: ${{ runner.os }}-pip-hola1
           restore-keys: |
             ${{ runner.os }}-pip-hola1
+      - name: Restore cache
+        run: ls ~/.cache/pip
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
