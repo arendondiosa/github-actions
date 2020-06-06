@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: '2.7'
           architecture: 'x64'
-      - name: Get pip cache dir
+      - name: Get pip cache path
         id: pip-cache
         run: |
           echo "::set-output name=dir::$(pip cache dir)"
