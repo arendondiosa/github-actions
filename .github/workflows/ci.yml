@@ -28,10 +28,6 @@ jobs:
           repository: arendondiosa/apidocs
           path: private
           token: ${{ secrets.ACCESS_TOKEN }}
-      - name: Check Public Repository
-        run: ls
-      - name: Check All Repositories
-        run: ls ..
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
@@ -57,7 +53,7 @@ jobs:
       - name: Run python lint
         run: |
           cd principal
-          python run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
+          python run_pylint.py --fail-under=6.49 --rcfile='.pylintrc' --path='principal'
   # lint-js:
   #   name: Lint JS
   #   runs-on: ubuntu-latest
