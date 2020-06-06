@@ -38,13 +38,12 @@ jobs:
         id: cache
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-hola
+          key: ${{ runner.os }}-pip-hola1
           restore-keys: |
-            ${{ runner.os }}-pip-hola
+            ${{ runner.os }}-pip-hola1
       - name: Install python dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          pip install -U pip wheel
           if [ -f principal/requirements.txt ]; then pip install -r principal/requirements.txt; fi
       - name: Show python environment
         run: |
