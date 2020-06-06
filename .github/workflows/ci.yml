@@ -1,5 +1,4 @@
 name: Tests Staging
-
 on:
   push:
     branches:
@@ -27,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.6'
+          python-version: '2.7'
           architecture: 'x64'
       - name: Get pip cache path
         id: pip-cache
@@ -38,16 +37,13 @@ jobs:
         id: cache
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-hola6
+          key: ${{ runner.os }}-pip-latest
           restore-keys: |
-            ${{ runner.os }}-pip-hola6
+            ${{ runner.os }}-pip-latest
       - name: Install python dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          ls
           pip install -U pip wheel
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip cache dir
       - name: Show python environment
         run: |
           python --version
