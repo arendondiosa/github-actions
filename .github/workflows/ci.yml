@@ -9,77 +9,51 @@ on:
     - staging
 
 jobs:
-  # lint-py:
-  #   name: Lint Python
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Install OS dependencies
-  #       run: sudo apt-get install libxml2-dev libxslt-dev
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v2
-  #       # with:
-  #       #   path: principal
-  #     # - name: Clone Private Repository
-  #     #   uses: actions/checkout@v2
-  #     #   with:
-  #     #     repository: arendondiosa/apidocs
-  #     #     path: private
-  #     #     token: ${{ secrets.ACCESS_TOKEN }}
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v1
-  #       with:
-  #         python-version: '2.7'
-  #         architecture: 'x64'
-  #     - name: Get pip cache path
-  #       id: pip-cache
-  #       run: |
-  #         echo "::set-output name=dir::$(pip cache dir)"
-  #     - name: Python Cache
-  #       uses: actions/cache@v2
-  #       id: cache
-  #       with:
-  #         path: ${{ steps.pip-cache.outputs.dir }}
-  #         key: ${{ runner.os }}-pip-latest
-  #         restore-keys: |
-  #           ${{ runner.os }}-pip-latest
-  #     - name: Install python dependencies
-  #       run: |
-  #         pip install -U pip wheel
-  #         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-  #     - name: Show python environment
-  #       run: |
-  #         python --version
-  #         python -m pip list
-      # - name: Run python lint
-      #   run: |
-      #     python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
-  lint-js:
-    name: Lint JS
+  lint-py:
+    name: Lint Python
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
-      - name: Cache node
+        with:
+          path: principal
+      - name: Clone Private Repository
+        uses: actions/checkout@v2
+        with:
+          repository: arendondiosa/apidocs
+          path: private
+          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '2.7'
+          architecture: 'x64'
+      - name: Get pip cache path
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+      - name: Python Cache
         uses: actions/cache@v2
+        id: cache
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-13-1
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-latest
           restore-keys: |
-            ${{ runner.os }}-node-13-1
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '13'
-      - name: Install node dependencies
+            ${{ runner.os }}-pip-latest
+      - name: Install python dependencies
         run: |
-          cd src/js/
-          npm install .
-      - name: Show node environment
+          pip install -U pip wheel
+          pip install pylint
+      - name: Show python environment
         run: |
-          node --version
-          npm --version
-  #     - name: Run JS lint
-  #       run: |
-  #         cd src/js/
-  #         npm run lint
-    
+          python --version
+          python -m pip list
+      - name: Run python lint
+        run: |
+          python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
+      - name: Deploy Push ${{github.ref}} ${{ github.head_ref }}
+        if: ${{github.event_name}} == 'push'
+        run: echo "PUSH"
+      - name: Deploy PR
+        if: ${{github.event_name}} == 'pull_request'
+        run: echo "PR"
