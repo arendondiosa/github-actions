@@ -51,9 +51,9 @@ jobs:
       - name: Run python lint
         run: |
           python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
-      - name: Deploy Push ${{github.ref}} (${{github.event_name}})
+      - name: Deploy Push
         if: github.event_name == 'push' 
         run: echo "PUSH"
-      - name: Deploy PR ${{github.ref}} (${{github.event_name}})
+      - name: Deploy PR
         if: github.event_name == 'pull_request'
         run: echo "PR"
