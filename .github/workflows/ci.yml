@@ -13,8 +13,6 @@ jobs:
     name: Lint Python
     runs-on: ubuntu-latest
     steps:
-      - name: Install OS dependencies
-        run: sudo apt-get install libxml2-dev libxslt-dev
       - name: Checkout branch
         uses: actions/checkout@v2
         with:
@@ -45,7 +43,7 @@ jobs:
       - name: Install python dependencies
         run: |
           pip install -U pip wheel
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pylint
       - name: Show python environment
         run: |
           python --version
