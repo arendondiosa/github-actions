@@ -17,12 +17,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: principal
-      - name: Clone Private Repository
-        uses: actions/checkout@v2
-        with:
-          repository: arendondiosa/apidocs
-          path: private
-          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
