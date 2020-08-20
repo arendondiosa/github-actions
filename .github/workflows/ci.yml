@@ -17,12 +17,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: principal
-      - name: Clone Private Repository
-        uses: actions/checkout@v2
-        with:
-          repository: arendondiosa/apidocs
-          path: private
-          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
@@ -51,9 +45,9 @@ jobs:
       - name: Run python lint
         run: |
           python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
-      - name: Deploy Push
+      - name: Deploy Push ${{github.event_name}}
         if: github.event_name == 'push' 
         run: echo "PUSH"
-      - name: Deploy PR
+      - name: Deploy PR ${{github.event_name}}
         if: github.event_name == 'pull_request'
         run: echo "PR"
