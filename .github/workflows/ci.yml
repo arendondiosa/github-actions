@@ -50,12 +50,12 @@ jobs:
           python -m pip list
       - name: Run python lint
         run: |
-          python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal'
+          python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal' --service='testservice' --version='python_3'
       - name: Deploy Push
         if: github.event_name == 'push' 
         run: |
           cd private
-          git config --global user.email "private@email.com"
+          git config --global user.email "alejandro@rendon.co"
           git config --global user.name "Test Commit"
           git add .
           git commit -m 'Update pylint score' --allow-empty

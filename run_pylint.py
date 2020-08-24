@@ -75,10 +75,19 @@ def main():
         help="If the final score is more than THRESHOLD, exit with"
         " exitcode 0, and pylint's exitcode otherwise.",
     )
+    parser.add_argument(
+        "--service", dest="service", type=str, help="service to evaluate"
+    )
+    parser.add_argument(
+        "--version",
+        dest="version",
+        type=str,
+        help="python version to test"
+    )
 
     args, remaining_args = parser.parse_known_args()
 
-    threshold = get_threshold('./private/pylint_score.json', args.threshold, 'test', 'python_3')
+    threshold = get_threshold('./private/pylint_score.json', args.threshold, args.service, args.version)
     path = args.path
     rcfile = args.rcfile
 
@@ -92,7 +101,7 @@ def main():
     if score < threshold:
         sys.exit(run.linter.msg_status)
     else:
-        store_threshold('./private/pylint_score.json', score, 'test', 'python_3')
+        store_threshold('./private/pylint_score.json', score, args.service, args.version)
         sys.exit(0)
 
 if __name__ == "__main__":
