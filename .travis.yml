@@ -26,4 +26,4 @@ deploy:
     on:
       branch:
         staging
-    script: bash scripts/deploy.sh
+    script: bash github-action/scripts/deploy.sh
