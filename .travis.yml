@@ -22,7 +22,7 @@ script:
 
 deploy:
   - provider: script
-    if: type = pull_request
+    if: type = push
     script: |
       cd private
       ls
