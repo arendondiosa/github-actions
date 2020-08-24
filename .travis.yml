@@ -22,8 +22,6 @@ script:
 
 deploy:
   - provider: script
-    on:
-      branch: staging
     if: type = push
     script: |
       cd private
