@@ -93,7 +93,7 @@ def main():
     args, remaining_args = parser.parse_known_args()
 
     file_object, threshold = get_threshold(
-        "./private/pylint_score.json", args.threshold, args.service, args.version
+        "./github-actions/pylint_score.json", args.threshold, args.service, args.version
     )
     path = args.path
     rcfile = args.rcfile
@@ -110,7 +110,7 @@ def main():
     else:
         store_threshold(
             file_object,
-            "./private/pylint_score.json",
+            "./github-actions/pylint_score.json",
             score,
             args.service,
             args.version,
