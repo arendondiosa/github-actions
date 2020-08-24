@@ -22,7 +22,6 @@ script:
 
 deploy:
   - provider: script
-    if: type = push
     on:
       branch:
         staging
