@@ -79,15 +79,15 @@ def main():
         "--service", dest="service", type=str, help="service to evaluate"
     )
     parser.add_argument(
-        "--python_version",
-        dest="python_version",
+        "--version",
+        dest="version",
         type=str,
         help="python version to test"
     )
 
     args, remaining_args = parser.parse_known_args()
 
-    threshold = get_threshold('./private/pylint_score.json', args.threshold, args.service, args.python_version)
+    threshold = get_threshold('./private/pylint_score.json', args.threshold, args.service, args.version)
     path = args.path
     rcfile = args.rcfile
 
@@ -101,7 +101,7 @@ def main():
     if score < threshold:
         sys.exit(run.linter.msg_status)
     else:
-        store_threshold('./private/pylint_score.json', score, args.threshold, args.service, args.python_version)
+        store_threshold('./private/pylint_score.json', score, args.threshold, args.service, args.version)
         sys.exit(0)
 
 if __name__ == "__main__":
