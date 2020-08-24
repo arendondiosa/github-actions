@@ -22,9 +22,10 @@ script:
 
 deploy:
   - provider: script
-    if: type = push
+    if: type = pull_request
     script: |
       cd private
+      ls
       git config --global user.email "alejandro@rendon.co"
       git config --global user.name "Test Commit"
       git add .
