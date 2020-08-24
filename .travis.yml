@@ -19,7 +19,7 @@ install:
   - pip install pylint
 
 script:
-  - python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal' --service='test_travis_service' --version='python_2'
+  - python github-actions/run_pylint.py --fail-under=6.49 --rcfile='github-actions/.pylintrc' --path='github-actions' --service='test_travis_service' --version='python_2'
 
 deploy:
   - provider: script
