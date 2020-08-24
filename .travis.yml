@@ -11,7 +11,7 @@ branches:
 
 before_install:
   - cd ..
-  - git clone -b staging https://github.com/arendondiosa/apidocs.git private
+  - git clone https://github.com/arendondiosa/apidocs.git private
   - cd github-actions
 
 install:
