@@ -18,6 +18,7 @@ import json
 import sys
 from pylint import lint
 
+
 def get_threshold(filename, current_threshold, service, version):
     """
     Get the threshold score
@@ -28,14 +29,19 @@ def get_threshold(filename, current_threshold, service, version):
     :return: Float, The last score to evaluate. Ie, 7.89
     """
     try:
-        with open(filename) as f: file_data = f.read()
+        with open(filename) as f:
+            file_data = f.read()
         file_object = json.loads(file_data)
-        threshold = file_object[version][service]
     except:
         file_object = {}
+
+    try:
+        threshold = file_object[version][service]
+    except:
         threshold = current_threshold
 
     return file_object, threshold
+
 
 def store_threshold(file_source, filename, current_threshold, service, version):
     """
@@ -46,11 +52,12 @@ def store_threshold(file_source, filename, current_threshold, service, version):
     :param service: String, Service to evaluate. Ie, 'originationservice'
     :param version: String, Python version to test. Ie, 'python_3'
     """
-    file_source[version] = file_source[version] if version in file_source else {} 
+    file_source[version] = file_source[version] if version in file_source else {}
     file_source[version][service] = current_threshold
 
-    with open(filename, 'w') as file:
+    with open(filename, "w") as file:
         file.write(json.dumps(file_source, indent=4))
+
 
 def main():
     DESC = (
@@ -80,15 +87,14 @@ def main():
         "--service", dest="service", type=str, help="service to evaluate"
     )
     parser.add_argument(
-        "--version",
-        dest="version",
-        type=str,
-        help="python version to test"
+        "--version", dest="version", type=str, help="python version to test"
     )
 
     args, remaining_args = parser.parse_known_args()
 
-    file_object, threshold = get_threshold('./private/pylint_score.json', args.threshold, args.service, args.version)
+    file_object, threshold = get_threshold(
+        "./private/pylint_score.json", args.threshold, args.service, args.version
+    )
     path = args.path
     rcfile = args.rcfile
 
@@ -102,8 +108,15 @@ def main():
     if score < threshold:
         sys.exit(run.linter.msg_status)
     else:
-        store_threshold(file_object, './private/pylint_score.json', score, args.service, args.version)
+        store_threshold(
+            file_object,
+            "./private/pylint_score.json",
+            score,
+            args.service,
+            args.version,
+        )
         sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
