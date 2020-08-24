@@ -1,0 +1,70 @@
+Search application
+Return application data based on the defined filters
+---
+tags:
+  - application
+parameters:
+  - name: limit_per_page
+    in: body
+    description: Limit the number of applications in the response
+    required: true
+    type: integer
+    example: 10
+  - name: page_number
+    in: body
+    description: Number page to return
+    required: true
+    type: integer
+    example: 1
+  - name: filters
+    in: body
+    description: Specific filter to apply to get the applications
+    required: true
+    type: object
+    example: {
+      application_type: 'NEW',
+      source: 'LENDINGPORTAL',
+      country: 'USA',
+      status: 'APPLICATION_RECEIVED',
+      iso_contact_id: 1,
+    }
+  - name: sorting_field
+    in: body
+    description: Field to sort the applications
+    required: true
+    type: string
+    example: 'application_number'
+  - name: sorting_order
+    in: body
+    description: Type of order to sort the applications
+    required: true
+    type: string
+    example: 'ASC'
+responses:
+  200:
+    description: List of applications based on the filters
+    type: dict
+    schema:
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: "#/definitions/application"
+        total_applications:
+          type: integer
+          example: 10
+    example: {
+      applications: [],
+      total_applications: 10,
+    }
+  400:
+    description: Invalid parameters
+    content: {}
+  500:
+    description: Internal server error
+    content: {}
+securitySchemes:
+  ApiKeyAuth:
+    type: apiKey
+    name: api_key
+    in: header
