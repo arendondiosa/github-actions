@@ -1,4 +1,5 @@
 #!/bin/bash
+
 cd private
 git config --global user.email "alejandro@rendon.co"
 git config --global user.name "Test Commit"
