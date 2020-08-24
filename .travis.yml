@@ -23,6 +23,9 @@ script:
 deploy:
   - provider: script
     # if: type = push
+    on:
+      branch:
+        staging
     script: |
       cd private
       ls
@@ -31,3 +34,4 @@ deploy:
       git add .
       git commit -m 'Update pylint score' --allow-empty
       git push origin master
+      
