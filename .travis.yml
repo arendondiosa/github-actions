@@ -12,7 +12,9 @@ branches:
 before_install:
   - cd ..
   - git clone https://github.com/arendondiosa/apidocs.git private
+  - ls
   - cd github-actions
+  - ls
 
 install:
   - pip install -U pip wheel
