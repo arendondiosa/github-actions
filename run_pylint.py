@@ -101,7 +101,7 @@ def main():
     if score < threshold:
         sys.exit(run.linter.msg_status)
     else:
-        store_threshold('./private/pylint_score.json', score, args.threshold, args.service, args.version)
+        store_threshold('./private/pylint_score.json', score, args.service, args.version)
         sys.exit(0)
 
 if __name__ == "__main__":
