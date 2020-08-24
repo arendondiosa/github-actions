@@ -1,0 +1,35 @@
+language: python
+
+python:
+  - "2.7"
+
+cache: pip
+
+branches:
+  only: 
+    - staging
+
+before_install:
+  - cd ..
+  - git clone -b staging git@github.com:arendondiosa/apidocs.git private
+  - cd github-actions
+
+install:
+  - pip install -U pip wheel
+  - pip install pylint
+
+script:
+  - python principal/run_pylint.py --fail-under=6.49 --rcfile='principal/.pylintrc' --path='principal' --service='test_travis_service' --version='python_2'
+
+deploy:
+  - provider: script
+    if: type = push
+    script: |
+      cd ../private
+      git config --global user.email "alejandro@rendon.co"
+      git config --global user.name "Test Commit"
+      git add .
+      git commit -m 'Update pylint score' --allow-empty
+      git push origin master
+    on:
+       branch: staging
