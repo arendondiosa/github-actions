@@ -24,7 +24,7 @@ deploy:
   - provider: script
     if: type = push
     script: |
-      cd ../private
+      cd private
       git config --global user.email "alejandro@rendon.co"
       git config --global user.name "Test Commit"
       git add .
