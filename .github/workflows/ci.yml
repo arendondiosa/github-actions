@@ -55,7 +55,7 @@ jobs:
         if: github.event_name == 'push' 
         run: |
           cd private
-          git config --global user.email "private@email.com"
+          git config --global user.email "alejandro@rendon.co"
           git config --global user.name "Test Commit"
           git add .
           git commit -m 'Update pylint score' --allow-empty
