@@ -54,7 +54,7 @@ jobs:
           --rcfile='github-actions/.pylintrc'
           --path='github-actions'
           --score_file='./private/pylint_score.json'
-          --service='test2service'
+          --service='test_actions_service'
           --version='python_3'
       - name: Deploy Push
         if: github.event_name == 'push' 

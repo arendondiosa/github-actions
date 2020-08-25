@@ -23,7 +23,7 @@ script:
       --rcfile='github-actions/.pylintrc'
       --score_file='./private/pylint_score.json'
       --path='github-actions'
-      --service='test2service'
+      --service='test_travis_service'
       --version='python_3'
 
 # deploy:
