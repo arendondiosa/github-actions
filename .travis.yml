@@ -18,12 +18,12 @@ install:
   - pip install pylint
 
 script:
-  - python github-actions/run_pylint.py \
-      --fail-under=6.49 \
-      --rcfile='github-actions/.pylintrc' \
-      --score_file='./private/pylint_score.json' \
-      --path='github-actions' \
-      --service='test2service' \
+  - python github-actions/run_pylint.py
+      --fail-under=6.49
+      --rcfile='github-actions/.pylintrc'
+      --score_file='./private/pylint_score.json'
+      --path='github-actions'
+      --service='test2service'
       --version='python_3'
 
 # deploy:
