@@ -49,14 +49,19 @@ jobs:
           python --version
           python -m pip list
       - name: Run python lint
+        run: python github-actions/run_pylint.py \
+          --fail-under=6.49 \
+          --rcfile='github-actions/.pylintrc' \
+          --path='github-actions' \
+          --score_file='./private/pylint_score.json' \
+          --service='test2service' \
+          --version='python_3'
+      - name: Deploy Push
+        if: github.event_name == 'push' 
         run: |
-          python github-actions/run_pylint.py --fail-under=6.49 --rcfile='github-actions/.pylintrc' --path='github-actions' --service='test2service' --version='python_3'
-      # - name: Deploy Push
-      #   if: github.event_name == 'push' 
-      #   run: |
-      #     cd private
-      #     git config --global user.email "alejandro@rendon.co"
-      #     git config --global user.name "Test Commit"
-      #     git add .
-      #     git commit -m 'Update pylint score' --allow-empty
-      #     git push origin master
+          cd private
+          git config --global user.email "alejandro@rendon.co"
+          git config --global user.name "Test Commit"
+          git add .
+          git commit -m 'Update pylint score' --allow-empty
+          git push origin master
