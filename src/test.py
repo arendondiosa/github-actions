@@ -404,4 +404,20 @@ def docstring_to_yaml_two(docstring_dict, tab_size=1):
 
         yaml += '\n' + parameters_yaml
 
+    if is_returns_enabled:
+        returns = docstring_dict['returns']
+        responses_yaml = '***responses:\n***  200:'
+
+        if 'doc' in returns and returns['doc']:
+            responses_yaml += '\n***    description: ' + returns['doc']
+
+        if 'example' in returns and returns['example']:
+            responses_yaml += '\n***    example: ' + returns['example']
+
+        if 'type' in returns and returns['type']:
+            responses_yaml += '\n***    type: ' + returns['type']
+
+        yaml += "\n" + responses_yaml
+    yaml += "\n"
+
     return add_tabs_to_yaml(yaml, tab_size)
