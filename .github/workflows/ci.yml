@@ -71,8 +71,6 @@ jobs:
     steps:
     - name: Checkout branch
       uses: actions/checkout@v2
-      with:
-        ref: staging
     - name: Hello world action step
       id: hello
       uses: arendondiosa/hello-world-docker-action@main
