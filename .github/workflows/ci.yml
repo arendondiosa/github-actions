@@ -75,4 +75,4 @@ jobs:
       id: hello
       uses: arendondiosa/hello-world-docker-action@main
       with:
-        branch: 'master'
+        branch: 'staging'
