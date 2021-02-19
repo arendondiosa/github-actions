@@ -60,3 +60,14 @@ jobs:
           git add .
           git commit -m 'Update pylint score' --allow-empty
           git push origin master
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+    - name: Hello world action step
+      id: hello
+      uses: arendondiosa/hello-world-docker-action@main
+      with:
+        branch: 'master'
