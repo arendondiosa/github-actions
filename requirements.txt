@@ -21,7 +21,7 @@ funcsigs==1.0.2
 httplib2==0.10.3
 ipaddress==1.0.19
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 jsonschema==2.5.1
 logutils==0.3.3
 lxml==3.6.0
