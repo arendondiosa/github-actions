@@ -94,5 +94,5 @@ jobs:
       uses: psf/black@stable
       with:
         options: "--diff --check"
-        src: ${{needs.pre-commit.outputs.hello}}
+        src: ${{needs.pre-commit.outputs.py-files}}
         version: "21.7b0"
