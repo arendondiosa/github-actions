@@ -13,7 +13,7 @@ jobs:
     name: Pre-commit
     runs-on: ubuntu-latest
     outputs:
-      js-files: ${{python test/filter_git_files.py --extension=".js"}}
+      js-files: python test/filter_git_files.py --extension=".js"
       migration-files: ${{ steps.js-files.outputs.migration-files }}
       python-files: ${{ steps.js-files.outputs.python-files }}
     steps:
@@ -27,9 +27,9 @@ jobs:
         with:
           python-version: "3.6"
           architecture: "x64"
-      - id: js-files
-        name: JS files
-        run: echo '::set-output name=js-files::$(python test/filter_git_files.py --extension=".js")'
+      # - id: js-files
+      #   name: JS files
+      #   run: echo '::set-output name=js-files::$(python test/filter_git_files.py --extension=".js")'
       - id: python-files
         name: Python files
         run: echo '::set-output name=python-files::$(python test/filter_git_files.py --extension=".py")'
