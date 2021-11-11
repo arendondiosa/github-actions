@@ -29,23 +29,23 @@ jobs:
           architecture: "x64"
       - name: Test script
         run: |
-          bash git_files.sh -b master
+          bash test/git_files.sh -b master
           cat out.txt
-          python filter_git_files.py --extension=".py"
+          python test/filter_git_files.py --extension=".py"
       - id: js-files
         name: JS files
         run: |
-          FILES=$(python filter_git_files.py --extension=".js")
+          FILES=$(python test/filter_git_files.py --extension=".js")
           echo ::set-output name=js-files::$FILES
       - id: py-files
         name: Python files
         run: |
-          FILES=$(python filter_git_files.py --extension=".py")
+          FILES=$(python test/filter_git_files.py --extension=".py")
           echo ::set-output name=files::$FILES
       - id: migration-files
         name: Migration files
         run: |
-          FILES=$(python filter_git_files.py --extension=".py" --migrations-path="migrations.txt")
+          FILES=$(python test/filter_git_files.py --extension=".py" --migrations-path="migrations.txt")
           echo "::set-output name=migration-files::$FILES"
       - id: hello
         name: Test job
