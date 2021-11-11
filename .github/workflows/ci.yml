@@ -13,7 +13,7 @@ jobs:
     name: Pre-commit
     runs-on: ubuntu-latest
     outputs:
-      js-files: python test/filter_git_files.py --extension=".js"
+      js-files: ${{ steps.js-files.outputs.js-files }}
       migration-files: ${{ steps.js-files.outputs.migration-files }}
       python-files: ${{ steps.js-files.outputs.python-files }}
     steps:
@@ -27,15 +27,15 @@ jobs:
         with:
           python-version: "3.6"
           architecture: "x64"
-      # - id: js-files
-      #   name: JS files
-      #   run: echo '::set-output name=js-files::$(python test/filter_git_files.py --extension=".js")'
+      - id: js-files
+        name: JS files
+        run: echo '::set-output name=js-files::$(echo python test/filter_git_files.py --extension=".js")' | bash
       - id: python-files
         name: Python files
-        run: echo '::set-output name=python-files::$(python test/filter_git_files.py --extension=".py")'
+        run: echo '::set-output name=python-files::$(echo python test/filter_git_files.py --extension=".py")' | bash
       - id: migrations-files
         name: Migrations files
-        run: echo '::set-output name=migrations-files::$(python test/filter_git_files.py --extension=".py" --migrations-path="migrations/")'
+        run: echo '::set-output name=migrations-files::$(echo python test/filter_git_files.py --extension=".py" --migrations-path="migrations/")' | bash
   test-js:
     runs-on: ubuntu-latest
     name: JS test
