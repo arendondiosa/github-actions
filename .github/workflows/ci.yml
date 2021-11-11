@@ -30,8 +30,8 @@ jobs:
           architecture: "x64"
       - name: Test script
         run: |
-          bash git_files.sh -b master
-          cat put.txt
+          bash test/git_files.sh -b master
+          cat out.txt
           python test/filter_git_files.py --extension=".py"
       - id: js-files
         name: JS files
