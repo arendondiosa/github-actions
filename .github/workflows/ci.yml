@@ -81,6 +81,18 @@ jobs:
     name: test
     needs: pre-commit
     steps:
-    - id: py-files-test
-      name: Python files
-      run: echo ${{needs.pre-commit.outputs.hello}}
+    - name: Checkout branch
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.6"
+        architecture: "x64"
+    - name: Run python formatter
+      uses: psf/black@stable
+      with:
+        options: "--diff --check"
+        src: ${{needs.pre-commit.outputs.hello}}
+        version: "21.7b0"
