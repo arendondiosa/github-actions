@@ -13,7 +13,7 @@ jobs:
     name: Pre-commit
     runs-on: ubuntu-latest
     outputs:
-      js-files: ${{ steps.js-files.outputs.js-files }}
+      js-files: python test/filter_git_files.py --extension=".js"
       migration-files: ${{ steps.js-files.outputs.migration-files }}
       python-files: ${{ steps.js-files.outputs.python-files }}
     steps:
@@ -33,9 +33,12 @@ jobs:
       - id: python-files
         name: Python files
         run: echo '::set-output name=python-files::$(python test/filter_git_files.py --extension=".py")'
+      - id: migrations-files
+        name: Migrations files
+        run: echo '::set-output name=migrations-files::$(python test/filter_git_files.py --extension=".py" --migrations-path="migrations/")'
   test-js:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: JS test
     needs: pre-commit
     steps:
     - name: Checkout branch
@@ -47,7 +50,7 @@ jobs:
       run: echo ${{needs.pre-commit.outputs.js-files}}
   test-py:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Python test
     needs: pre-commit
     steps:
     - name: Checkout branch
@@ -57,3 +60,15 @@ jobs:
     - id: py-files-test
       name: Python files
       run: echo ${{needs.pre-commit.outputs.py-files}}
+  test-migrations:
+    runs-on: ubuntu-latest
+    name: Migrations test
+    needs: pre-commit
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - id: py-files-test
+      name: Python files
+      run: echo ${{needs.pre-commit.outputs.migrations-files}}
