@@ -46,7 +46,7 @@ jobs:
       - id: hello
         name: Test job
         run: |
-          echo "Hello World"
+          echo "::set-output name=hello::Hello World"
   test-js:
     runs-on: ubuntu-latest
     name: JS test
