@@ -71,8 +71,6 @@ def main():
 
     args, remaining_args = parser.parse_known_args()
 
-    print("INFO: Processing detected migrations inside {}".format(args.input_file_path))
-
     all_files = get_all_files(args.input_file_path)
     files_filtered = search_files_by_type(args.extension, all_files)
 
@@ -80,8 +78,6 @@ def main():
         print(check_migrations(args.migrations_path))
     else:
         print(format_output(files_filtered))
-
-    print("INFO: No problems were found in migrations")
     sys.exit(0)
 
 
