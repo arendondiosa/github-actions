@@ -12,7 +12,7 @@ def get_all_files(file_path):
     if path.isfile(file_path):
         with open(file_path) as file:
             lines = file.readlines()
-            all_files = [line.rstrip() for line in lines]
+            all_files = [line.rstrip() for line in lines if path.isfile(line.rstrip())]
 
     return all_files
 

@@ -4,6 +4,7 @@
 filter_git_files.py
 git_files.sh
 migrations.txt
+migrations/other.py
 migrations/test.py
 out.txt
 run_pylint.py

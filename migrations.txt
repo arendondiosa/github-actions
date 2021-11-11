@@ -1,1 +1,2 @@
+migrations/other.py
 migrations/test.py
