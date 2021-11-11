@@ -15,7 +15,7 @@ jobs:
     outputs:
       js-files: ${{ steps.js-files.outputs.js-files }}
       migration-files: ${{ steps.migration-files.outputs.migration-files }}
-      py-files: ${{ steps.python-files.outputs.py-files }}
+      py-files: ${{ steps.py-files.outputs.files }}
       hello: ${{ steps.hello.outputs.hello }}
     steps:
       - name: Checkout branch
@@ -37,7 +37,7 @@ jobs:
         name: Python files
         run: |
           FILES=$(python test/filter_git_files.py --extension=".py")
-          echo ::set-output name=py-files::$FILES
+          echo ::set-output name=files::$FILES
       - id: migration-files
         name: Migration files
         run: |
