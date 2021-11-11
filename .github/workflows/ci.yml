@@ -29,7 +29,10 @@ jobs:
           python-version: "3.6"
           architecture: "x64"
       - name: Test script
-        run: python test/filter_git_files.py --extension=".py"
+        run: |
+          bash git_files.sh -b master
+          cat put.txt
+          python test/filter_git_files.py --extension=".py"
       - id: js-files
         name: JS files
         run: |
