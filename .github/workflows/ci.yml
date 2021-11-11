@@ -9,72 +9,51 @@ on:
     - staging
 
 jobs:
-  lint-py:
-    name: Lint Python
+  pre-commit:
+    name: Pre-commit
     runs-on: ubuntu-latest
+    outputs:
+      js-files: ${{ steps.js-files.outputs.js-files }}
+      migration-files: ${{ steps.js-files.outputs.migration-files }}
+      python-files: ${{ steps.js-files.outputs.python-files }}
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
         with:
-          path: github-actions
-      - name: Clone Private Repository
-        uses: actions/checkout@v2
-        with:
-          repository: arendondiosa/apidocs
-          path: private
-          token: ${{ secrets.ACCESS_TOKEN }}
+          fetch-depth: 0
+          path: test
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: '2.7'
-          architecture: 'x64'
-      - name: Get pip cache path
-        id: pip-cache
-        run: |
-          echo "::set-output name=dir::$(pip cache dir)"
-      - name: Python Cache
-        uses: actions/cache@v2
-        id: cache
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-latest
-          restore-keys: |
-            ${{ runner.os }}-pip-latest
-      - name: Install python dependencies
-        run: |
-          pip install -U pip wheel
-          pip install pylint
-      - name: Show python environment
-        run: |
-          python --version
-          python -m pip list
-      - name: Run python lint
-        run: python github-actions/run_pylint.py
-          --fail-under=6.49
-          --rcfile='github-actions/.pylintrc'
-          --path='github-actions'
-          --score_file='./private/pylint_score.json'
-          --service='test_actions_service'
-          --version='python_3'
-      - name: Deploy Push
-        if: github.event_name == 'push' 
-        run: |
-          cd private
-          git config --global user.email "alejandro@rendon.co"
-          git config --global user.name "Test Commit"
-          git add .
-          git commit -m 'Update pylint score' --allow-empty
-          git push origin master
-  hello_world_job:
+          python-version: "3.6"
+          architecture: "x64"
+      - id: js-files
+        name: JS files
+        run: echo '::set-output name=js-files::$(python test/filter_git_files.py --extension=".js")'
+      - id: python-files
+        name: Python files
+        run: echo '::set-output name=python-files::$(python test/filter_git_files.py --extension=".py")'
+  test-js:
     runs-on: ubuntu-latest
     name: A job to say hello
+    needs: pre-commit
     steps:
     - name: Checkout branch
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Hello world action step
-      id: hello
-      uses: arendondiosa/hello-world-docker-action@main
+    - id: js-files-test
+      name: JS files
+      run: echo ${{needs.pre-commit.outputs.js-files}}
+  test-py:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    needs: pre-commit
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
       with:
-        branch: 'staging'
+        fetch-depth: 0
+    - id: py-files-test
+      name: Python files
+      run: echo ${{needs.pre-commit.outputs.py-files}}
