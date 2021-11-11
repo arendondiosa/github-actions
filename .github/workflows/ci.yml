@@ -22,7 +22,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          path: test
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -30,23 +29,23 @@ jobs:
           architecture: "x64"
       - name: Test script
         run: |
-          bash test/git_files.sh -b master
+          bash git_files.sh -b master
           cat out.txt
-          python test/filter_git_files.py --extension=".py"
+          python filter_git_files.py --extension=".py"
       - id: js-files
         name: JS files
         run: |
-          FILES=$(python test/filter_git_files.py --extension=".js")
+          FILES=$(python filter_git_files.py --extension=".js")
           echo ::set-output name=js-files::$FILES
       - id: py-files
         name: Python files
         run: |
-          FILES=$(python test/filter_git_files.py --extension=".py")
+          FILES=$(python filter_git_files.py --extension=".py")
           echo ::set-output name=files::$FILES
       - id: migration-files
         name: Migration files
         run: |
-          FILES=$(python test/filter_git_files.py --extension=".py" --migrations-path="migrations/")
+          FILES=$(python filter_git_files.py --extension=".py" --migrations-path="migrations/")
           echo "::set-output name=migration-files::$FILES"
       - id: hello
         name: Test job
