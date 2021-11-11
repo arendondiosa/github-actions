@@ -32,10 +32,10 @@ jobs:
         run: sh -c 'FILES=$(python test/filter_git_files.py --extension=".py"); echo ::set-output name=js-files::$FILES'
       - id: python-files
         name: Python files
-        run: echo '::set-output name=python-files::$(echo python test/filter_git_files.py --extension=".py")' | bash
+        run: sh -c 'FILES=$(python test/filter_git_files.py --extension=".js"); echo ::set-output name=js-files::$FILES'
       - id: migrations-files
         name: Migrations files
-        run: echo '::set-output name=migrations-files::$(echo python test/filter_git_files.py --extension=".py" --migrations-path="migrations/")' | bash
+        run: sh -c 'FILES=$(python test/filter_git_files.py --extension=".js" --migrations-path="migrations/"); echo ::set-output name=js-files::$FILES'
   test-js:
     runs-on: ubuntu-latest
     name: JS test
