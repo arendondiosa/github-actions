@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       js-files: ${{ steps.js-files.outputs.js-files }}
-      migration-files: ${{ steps.js-files.outputs.migration-files }}
-      python-files: ${{ steps.js-files.outputs.python-files }}
+      migration-files: ${{ steps.migration-files.outputs.migration-files }}
+      py-files: ${{ steps.python-files.outputs.py-files }}
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
@@ -29,13 +29,19 @@ jobs:
           architecture: "x64"
       - id: js-files
         name: JS files
-        run: sh -c 'FILES=$(python test/filter_git_files.py --extension=".py"); echo ::set-output name=js-files::$FILES'
-      - id: python-files
+        run: |
+          FILES=$(python test/filter_git_files.py --extension=".js")
+          echo ::set-output name=js-files::$FILES
+      - id: py-files
         name: Python files
-        run: sh -c 'FILES=$(python test/filter_git_files.py --extension=".js"); echo ::set-output name=js-files::$FILES'
-      - id: migrations-files
-        name: Migrations files
-        run: sh -c 'FILES=$(python test/filter_git_files.py --extension=".js" --migrations-path="migrations/"); echo ::set-output name=js-files::$FILES'
+        run: |
+          FILES=$(python test/filter_git_files.py --extension=".py")
+          echo ::set-output name=py-files::$FILES
+      - id: migration-files
+        name: Migration files
+        run: |
+          FILES=$(python test/filter_git_files.py --extension=".py" --migrations-path="migrations/")
+          echo ::set-output name=migration-files::$FILES
   test-js:
     runs-on: ubuntu-latest
     name: JS test
@@ -71,4 +77,4 @@ jobs:
         fetch-depth: 0
     - id: py-files-test
       name: Python files
-      run: echo ${{needs.pre-commit.outputs.migrations-files}}
+      run: echo ${{needs.pre-commit.outputs.migration-files}}
