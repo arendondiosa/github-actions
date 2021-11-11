@@ -45,7 +45,7 @@ jobs:
       - id: migration-files
         name: Migration files
         run: |
-          FILES=$(python filter_git_files.py --extension=".py" --migrations-path="migrations/")
+          FILES=$(python filter_git_files.py --extension=".py" --migrations-path="migrations.txt")
           echo "::set-output name=migration-files::$FILES"
       - id: hello
         name: Test job
@@ -76,8 +76,9 @@ jobs:
       name: Python files
       run: echo ${{needs.pre-commit.outputs.migration-files}}
   hello:
+    if: ${{needs.pre-commit.outputs.py-files}}
     runs-on: ubuntu-latest
-    name: Migrations test
+    name: test
     needs: pre-commit
     steps:
     - id: py-files-test
