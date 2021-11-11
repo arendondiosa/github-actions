@@ -13,7 +13,7 @@ jobs:
     name: Pre-commit
     runs-on: ubuntu-latest
     outputs:
-      js-files: python test/filter_git_files.py --extension=".js"
+      js-files: ${{python test/filter_git_files.py --extension=".js"}}
       migration-files: ${{ steps.js-files.outputs.migration-files }}
       python-files: ${{ steps.js-files.outputs.python-files }}
     steps:
