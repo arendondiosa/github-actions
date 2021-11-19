@@ -12,7 +12,7 @@ on:
 
 jobs:
   example_job_1:
-    name: Pass input and secrets to my-action
+    name: Example job 1
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ inputs.username }} ${{ secrets.token }}
