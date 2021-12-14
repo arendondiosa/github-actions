@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ inputs.username }} ${{ secrets.token }}
+      - run: exit(1)
   other_job_2:
     needs: example_job_2
     name: Other job 2
