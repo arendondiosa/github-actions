@@ -1,0 +1,8 @@
+.DS_Store
+.github/workflows/ci.yml
+.travis.yml
+migrations/other.py
+run_pylint.py
+scripts/deploy.sh
+src/js/src/test.js
+src/test.py

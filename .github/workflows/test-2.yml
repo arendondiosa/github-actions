@@ -1,0 +1,26 @@
+name: Test 2
+
+on:
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
+
+jobs:
+  example_job_2:
+    name:  Example Job 2
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ inputs.username }} ${{ secrets.token }}
+      - run: exit(1)
+  other_job_2:
+    needs: example_job_2
+    name: Other job 2
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ inputs.username }} ${{ secrets.token }}
+  

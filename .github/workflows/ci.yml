@@ -1,4 +1,4 @@
-name: Tests Staging
+name: CI Staging
 
 on:
   push:
@@ -7,6 +7,9 @@ on:
   pull_request:
     branches:
     - staging
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   lint-py:
@@ -15,31 +18,11 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
-        with:
-          path: github-actions
-      - name: Clone Private Repository
-        uses: actions/checkout@v2
-        with:
-          repository: arendondiosa/apidocs
-          path: private
-          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
           python-version: '2.7'
           architecture: 'x64'
-      - name: Get pip cache path
-        id: pip-cache
-        run: |
-          echo "::set-output name=dir::$(pip cache dir)"
-      - name: Python Cache
-        uses: actions/cache@v2
-        id: cache
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-latest
-          restore-keys: |
-            ${{ runner.os }}-pip-latest
       - name: Install python dependencies
         run: |
           pip install -U pip wheel
@@ -49,19 +32,60 @@ jobs:
           python --version
           python -m pip list
       - name: Run python lint
-        run: python github-actions/run_pylint.py
-          --fail-under=6.49
-          --rcfile='github-actions/.pylintrc'
-          --path='github-actions'
-          --score_file='./private/pylint_score.json'
-          --service='test_actions_service'
-          --version='python_3'
-      - name: Deploy Push
-        if: github.event_name == 'push' 
         run: |
-          cd private
-          git config --global user.email "alejandro@rendon.co"
-          git config --global user.name "Test Commit"
-          git add .
-          git commit -m 'Update pylint score' --allow-empty
-          git push origin master
+          echo "Python lint"
+  test-py:
+    needs: lint-py
+    name: Test Python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '2.7'
+          architecture: 'x64'
+      - name: Install python dependencies
+        run: |
+          pip install -U pip wheel
+      - name: Show python environment
+        run: |
+          python --version
+          python -m pip list
+      - name: Run python test
+        run: |
+          echo "Python Tests"
+  lint-js:
+    name: Lint JS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Setup Javascript
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Show python environment
+        run: |
+          node --version
+      - name: Run JS lint
+        run: |
+          echo "JS lint"
+  test-js:
+    needs: lint-js
+    name: Test Javascript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Setup Javascript
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Show python environment
+        run: |
+          node --version
+      - name: Run JS test
+        run: |
+          echo "JS test"
