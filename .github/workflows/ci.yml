@@ -9,6 +9,7 @@ on:
     - staging
 concurrency:
   group: ci-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   lint-py:
