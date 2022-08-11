@@ -84,6 +84,9 @@ def main():
         " exitcode 0, and pylint's exitcode otherwise.",
     )
     parser.add_argument(
+        "--score_file", dest="score_file", type=str, help="Path to store the score"
+    )
+    parser.add_argument(
         "--service", dest="service", type=str, help="service to evaluate"
     )
     parser.add_argument(
@@ -93,7 +96,7 @@ def main():
     args, remaining_args = parser.parse_known_args()
 
     file_object, threshold = get_threshold(
-        "./private/pylint_score.json", args.threshold, args.service, args.version
+        args.score_file, args.threshold, args.service, args.version
     )
     path = args.path
     rcfile = args.rcfile
@@ -110,7 +113,7 @@ def main():
     else:
         store_threshold(
             file_object,
-            "./private/pylint_score.json",
+            args.score_file,
             score,
             args.service,
             args.version,

@@ -1,0 +1,34 @@
+language: python
+
+python:
+  - "2.7"
+
+cache: pip
+
+branches:
+  only: 
+    - staging
+
+before_install:
+  - cd ..
+  - git clone https://github.com/arendondiosa/apidocs.git private
+
+install:
+  - pip install -U pip wheel
+  - pip install pylint
+
+script:
+  - python github-actions/run_pylint.py
+      --fail-under=6.49
+      --rcfile='github-actions/.pylintrc'
+      --score_file='./private/pylint_score.json'
+      --path='github-actions'
+      --service='test_travis_service'
+      --version='python_3'
+
+# deploy:
+#   - provider: script
+#     on:
+#       branch:
+#         staging
+#     script: bash github-actions/scripts/deploy.sh
