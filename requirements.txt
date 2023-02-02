@@ -51,7 +51,7 @@ six==1.11.0
 SQLAlchemy-JSONField==0.6.3
 SQLAlchemy==1.0.12
 ujson==1.35
-Werkzeug==0.14.1
+Werkzeug==0.15.5
 xmltodict==0.11.0
 dicttoxml==1.6.6
 unidecode==1.0.23
